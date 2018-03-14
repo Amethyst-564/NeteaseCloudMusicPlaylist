@@ -13,7 +13,7 @@ public class JsonParse {
         JSONObject object = JSON.parseObject(rawjson);
         JSONObject resultObj = JSON.parseObject(object.get("result").toString());
 
-        //tracks是JSON数组，要用JSONArray然后遍历数组！
+        //tracks是数组，要用JSONArray然后遍历数组！
         JSONArray tracksArr = JSON.parseArray(resultObj.get("tracks").toString());
         for (Object trackTemp : tracksArr) {
             //将取得的Object类型转换成JSONObject类型
