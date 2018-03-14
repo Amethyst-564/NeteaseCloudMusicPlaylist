@@ -9,15 +9,25 @@ public class ShareLinkToJson {
 
         //提取用户分享链接中的歌单id
         StringBuffer temp = new StringBuffer(userShareLink);
-        int start = temp.indexOf("id=") + 3;
-        int end = temp.indexOf("&userid");
-        String playListId = temp.substring(start, end);
+        int start, end;
+        if (temp.indexOf("&userid") == -1) {
+            start = temp.indexOf("id=") + 3;
+            String playListId = temp.substring(start);
+            String url = "http://music.163.com/api/playlist/detail?id=" + playListId + "&updateTime=-1";
+            String rawJson = GetResponse.SendGET(url);
 
-        //将id加入获取歌单信息的api中，得到真实url
-        String url = "http://music.163.com/api/playlist/detail?id=" + playListId + "&updateTime=-1";
-        String rawJson = GetResponse.SendGET(url);
+            return rawJson;
+        } else {
+            start = temp.indexOf("id=") + 3;
+            end = temp.indexOf("&userid");
+            String playListId = temp.substring(start, end);
 
-        return rawJson;
+            //将id加入获取歌单信息的api中，得到真实url
+            String url = "http://music.163.com/api/playlist/detail?id=" + playListId + "&updateTime=-1";
+            String rawJson = GetResponse.SendGET(url);
+
+            return rawJson;
+        }
 
 
     }
